@@ -32,19 +32,19 @@ bot.on('start', function() {
     .then(function(data) {
       bot.channelsById = data.channels.reduce(function(memo, channel) {
         memo[channel.id] = channel.name;
-        return memo; 
-      }, {})
+        return memo;
+      }, {});
     })
     .fail(function(err) {
       console.log('error: ', err);
     });
-    
+
     // loading timeout lets table bot ignore already thrown tables
     bot.isLoading = true;
 
     setTimeout(function() {
       console.log('Table bot is ready to help you respect tables.');
-      bot.isLoading = false; 
+      bot.isLoading = false;
     }, 2000);
 });
 
@@ -54,9 +54,9 @@ bot.on('message', function(msg) {
     if (hasTableBeenThrown(msg.text)) {
       var channelName = bot.channelsById[msg.channel];
       var params = {
-        icon_emoji: config.icon_emoji 
+        icon_emoji: config.icon_emoji
       };
-      
+
       bot.postMessageToChannel(channelName, config.message, params)
         .fail(function(err) {
           console.log('error:', err);
